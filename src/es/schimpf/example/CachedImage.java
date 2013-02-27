@@ -6,6 +6,12 @@ import java.security.NoSuchAlgorithmException;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+/**
+ * Wrapper for a bitmap and its URL.
+ * 
+ * @author gschimpf
+ * 
+ */
 public class CachedImage {
 
 	private Bitmap bitmap;

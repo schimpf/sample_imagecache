@@ -1,6 +1,7 @@
 package es.schimpf.example;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import es.schimpf.example.imagechache.R;
 
 /**
+ * TestActivity for the BitmapCache class.
  * 
  * You can find more information about this code in my <a
  * href="http://schimpf.es">blog</a>.
@@ -23,7 +25,7 @@ public class TestActivity extends Activity {
 		setContentView(R.layout.main);
 		super.onCreate(savedInstanceState);
 
-		final ImageCacher ic = ImageCacher.initInstance(this);
+		final BitmapCache ic = BitmapCache.initInstance(this);
 		ic.readDir();
 
 		final ImageView imageView1 = (ImageView) findViewById(R.id.imageView1);
@@ -40,13 +42,30 @@ public class TestActivity extends Activity {
 			public void onClick(View v) {
 				ic.getImageForView(
 						"http://cdn1.iconfinder.com/data/icons/gestureworks_gesture_glyphs/128/stroke_number_one_gestureworks.png",
-						imageView1);
+						new OnBitmapReadyListener() {
+							@Override
+							public void onBitmapReady(Bitmap bitmap) {
+								imageView1.setImageBitmap(bitmap);
+							}
+						});
+
 				ic.getImageForView(
 						"http://cdn1.iconfinder.com/data/icons/gestureworks_gesture_glyphs/128/stroke_number_two_gestureworks.png",
-						imageView2);
+						new OnBitmapReadyListener() {
+							@Override
+							public void onBitmapReady(Bitmap bitmap) {
+								imageView2.setImageBitmap(bitmap);
+							}
+						});
+
 				ic.getImageForView(
 						"http://cdn1.iconfinder.com/data/icons/gestureworks_gesture_glyphs/128/stroke_number_three_gestureworks.png",
-						imageView3);
+						new OnBitmapReadyListener() {
+							@Override
+							public void onBitmapReady(Bitmap bitmap) {
+								imageView3.setImageBitmap(bitmap);
+							}
+						});
 
 			}
 		});

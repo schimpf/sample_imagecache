@@ -1,23 +1,22 @@
 package es.schimpf.example;
 
 import java.io.InputStream;
-import java.lang.ref.WeakReference;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ImageView;
 
 /**
+ * AsyncTask to download an image.
  */
 public class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
 
-	/** Reference to the view which should receive the image */
-	private final WeakReference<ImageView> imageRef;
-
 	/** Store to cache the bitmap */
 	private CachedImage ci;
+
+	/** Listener to nitify when bitmap has been downloaded. */
+	private OnBitmapReadyListener listener;
 
 	/**
 	 * Constructor.
@@ -25,8 +24,8 @@ public class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
 	 * @param imageView
 	 *            The ImageView which will receive the image.
 	 */
-	public ImageDownloadTask(CachedImage ci, ImageView imageView) {
-		imageRef = new WeakReference<ImageView>(imageView);
+	public ImageDownloadTask(CachedImage ci, OnBitmapReadyListener listener) {
+		this.listener = listener;
 		this.ci = ci;
 	}
 
@@ -60,19 +59,14 @@ public class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
 		}
 		Log.d("ImageCache", "downloading" + ci.getUrl() + " DONE");
 
-		if (imageRef != null) {
-			ImageView imageView = imageRef.get();
-			if (imageView != null) {
-				imageView.setImageBitmap(bitmap);
-			}
-		}
-
 		if (ci != null) {
 			ci.setBitmap(bitmap);
-			ImageCacher.getInstance().cacheFile(ci);
+			BitmapCache.getInstance().cacheFile(ci);
 		}
 
-		// data.setBitmap(bitmap);
+		if (listener != null) {
+			listener.onBitmapReady(bitmap);
+		}
 	}
 
 }

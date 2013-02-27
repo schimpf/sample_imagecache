@@ -1,4 +1,6 @@
-sample_imagecache
-=================
+sample_autoclosedialog
+======================
 
-Example downloading bitmaps and caching them on file
+Example showing a dialog in android closing itself after some time
+
+http://schimpf.es/autoclose-dialog-after-some-time

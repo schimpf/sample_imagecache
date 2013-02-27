@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EXAMPLE APP</string>
+    <string name="load">Load</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="reset_images">Reset images</string>
+</resources>
